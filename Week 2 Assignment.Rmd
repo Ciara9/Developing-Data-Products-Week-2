@@ -1,0 +1,55 @@
+---
+title: "Data Development Week2 Assignment"
+author: "Ciara Tilbrook"
+date: "15/09/2021"
+output: html_document
+---
+
+
+
+## Map of 50 Wonders of the World
+
+World wonders csv downloaded from https://www.kaggle.com/karnikakapoor/wonders-of-world/version/2
+
+
+```{r, include =  FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(leaflet)
+library(htmltools)
+
+setwd("C:/Users/ctil9/OneDrive/Documents/R/Data Science Grad Scheme/Developing Data Products")
+world_wonders <- read.csv("wonders_of_world.csv",
+                          header = TRUE,
+                          sep = ",")
+data <- data.frame(Name = world_wonders$Name,
+                   Location = world_wonders$Location,
+                   Latitude = world_wonders$Latitude,
+                   Longitude = world_wonders$Longitude,
+                   YearBuilt = world_wonders$Build.in.year,
+                   Type = world_wonders$Type)
+map <- data %>% 
+  leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(popup = paste(
+    "<br>Name: ",
+    htmlEscape(data$Name),
+    "<br>Location: ",
+    htmlEscape(data$Location),
+    "<br>Type:",
+    htmlEscape(data$Type),
+    "<br>Year Built:",
+    htmlEscape(data$YearBuilt)))
+```
+
+
+```{r pressure, echo=FALSE}
+
+
+map
+```
+
+
+
+
+
+
